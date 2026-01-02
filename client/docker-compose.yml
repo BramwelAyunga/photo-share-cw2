@@ -1,0 +1,12 @@
+services:
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: photoshare_client
+    restart: always
+    ports:
+      - "3000:80"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
