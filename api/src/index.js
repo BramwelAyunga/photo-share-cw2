@@ -26,10 +26,22 @@ const app = express();
 
 // Middleware
 app.use(morgan('dev'));
+const allowedOrigins = [
+  'http://localhost:5173',
+  process.env.CLIENT_URL, // deployed frontend later
+].filter(Boolean);
+
 app.use(cors({
-  origin: process.env.CLIENT_URL, 
-  credentials: true, // This allows session cookies to be sent and received
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true); // Postman / server-to-server
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error(`CORS blocked for origin: ${origin}`));
+  },
+  credentials: true,
 }));
+
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
