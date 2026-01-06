@@ -1,19 +1,20 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import api from '../lib/api';
+// import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { FaUserCircle } from 'react-icons/fa';
 
 // Fetches user profile data (id, name, role)
 const fetchUserProfile = async (userId) => {
-    const { data } = await axios.get(`/api/users/${userId}`);
+    const { data } = await api.get(`/api/users/${userId}`);
     return data;
 };
 
 // Fetches media uploaded by a specific user
 const fetchUserMedia = async (userId) => {
-    const { data } = await axios.get(`/api/users/${userId}/media`);
+    const { data } = await api.get(`/api/users/${userId}/media`);
     return data;
 };
 

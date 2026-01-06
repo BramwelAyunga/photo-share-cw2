@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
+// import axios from 'axios';
+import api from '../../lib/api';
 import { useAuth } from '../../context/AuthContext';
 
 const Rating = ({ mediaId }) => {
@@ -10,7 +11,7 @@ const Rating = ({ mediaId }) => {
 
     const mutation = useMutation({
         mutationFn: (rating) => {
-            return axios.post(`/api/media/${mediaId}/ratings`, { rating });
+            return api.post(`/api/media/${mediaId}/ratings`, { rating });
         },
         onSuccess: () => {
             // Invalidate and refetch the media details to show the new average rating

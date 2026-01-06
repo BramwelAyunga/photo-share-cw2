@@ -1,12 +1,13 @@
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+// import axios from 'axios';
+import api from '../lib/api';
 import Comments from '../components/comments/Comments';
 import Rating from '../components/ratings/Rating';
 import { FaStar } from 'react-icons/fa';
 
 const fetchMediaDetails = async (id) => {
-    const { data } = await axios.get(`/api/media/${id}`);
+    const { data } = await api.get(`/api/media/${id}`);
     return data;
 };
 

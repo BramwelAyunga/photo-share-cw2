@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
+// import axios from 'axios';
+import api from '../lib/api';
 import { useNavigate } from 'react-router-dom';
 
 const MediaUploadPage = () => {
@@ -14,7 +15,7 @@ const MediaUploadPage = () => {
 
     const mutation = useMutation({
         mutationFn: (formData) => {
-            return axios.post('/api/media', formData, {
+            return api.post('/api/media', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

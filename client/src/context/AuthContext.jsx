@@ -1,8 +1,10 @@
 import { createContext, useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+import api from '../lib/api';
+
 
 // Configure axios to send cookies with every request
-axios.defaults.withCredentials = true;
+api.defaults.withCredentials = true;
 
 const AuthContext = createContext();
 
@@ -14,7 +16,7 @@ export const AuthProvider = ({ children }) => {
         const checkSession = async () => {
             try {
                 // Assumes an endpoint that returns the user if a session is active
-                const { data } = await axios.get('/api/auth/me');
+                const { data } = await api.get('/api/auth/me');
                 setUser(data.user);
 
                 console.log("user is ", user);
@@ -29,16 +31,16 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const login = async (email, password) => {
-        const { data } = await axios.post('/api/auth/login', { email, password });
+        const { data } = await api.post('/api/auth/login', { email, password });
         setUser(data.user);
     };
 
     const register = async (email, password, name) => {
-        await axios.post('/api/auth/register', { email, password, name });
+        await api.post('/api/auth/register', { email, password, name });
     };
 
     const logout = async () => {
-        await axios.post('/api/auth/logout');
+        await api.post('/api/auth/logout');
         setUser(null);
     };
 

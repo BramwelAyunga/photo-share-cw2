@@ -1,10 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
+//import axios from 'axios';
+import api from '../../lib/api';
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 
+
 const fetchComments = async (mediaId) => {
-    const { data } = await axios.get(`/api/media/${mediaId}/comments`);
+    const { data } = await api.get(`/api/media/${mediaId}/comments`);
     return data;
 };
 
@@ -20,7 +22,7 @@ const Comments = ({ mediaId }) => {
 
     const mutation = useMutation({
         mutationFn: (newComment) => {
-            return axios.post(`/api/media/${mediaId}/comments`, newComment);
+            return api.post(`/api/media/${mediaId}/comments`, newComment);
         },
         onSuccess: () => {
             setComment('');

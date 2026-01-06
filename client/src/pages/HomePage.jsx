@@ -1,5 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import axios from 'axios';
+// import axios from 'axios';
+import api from '../lib/api';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaRegComment, FaStar, FaUserCircle, FaImage, FaSearch } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
@@ -10,7 +11,7 @@ const fetchMedia = async ({ pageParam = 1, searchTerm }) => {
     const url = searchTerm
         ? `/api/media/search?q=${searchTerm}&page=${pageParam}&limit=${limit}`
         : `/api/media?page=${pageParam}&limit=${limit}`;
-    const { data } = await axios.get(url);
+    const { data } = await api.get(url);
     return { data, nextPage: data.length === limit ? pageParam + 1 : undefined };
 };
 

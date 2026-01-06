@@ -14,7 +14,8 @@ const { createClient } = require('redis');
 
 // Initialize Redis client and store
 // The URL points to the 'redis' service in your docker-compose.yml
-const redisClient = createClient({ url: 'redis://redis:6379' });
+const redisUrl = process.env.REDIS_URL;
+const redisClient = createClient({ url: redisUrl });
 redisClient.connect().catch(console.error);
 
 const redisStore = new RedisStore({
@@ -27,8 +28,7 @@ const app = express();
 // Middleware
 app.use(morgan('dev'));
 const allowedOrigins = [
-  'http://localhost:5173',
-  process.env.CLIENT_URL, // deployed frontend later
+  process.env.CLIENT_URL ,// deployed frontend later
 ].filter(Boolean);
 
 app.use(cors({
