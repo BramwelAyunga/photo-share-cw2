@@ -27,20 +27,31 @@ const app = express();
 
 // Middleware
 app.use(morgan('dev'));
+
+const normalize = (v) => (v ? v.trim().replace(/\/$/, '') : v);
+
 const allowedOrigins = [
-  process.env.CLIENT_URL ,// deployed frontend later
+  'http://localhost:5173',
+  'https://photoshaareweb.z1.web.core.windows.net',
+  normalize(process.env.CLIENT_URL),
 ].filter(Boolean);
+
+console.log('CORS allowedOrigins:', allowedOrigins);
 
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin) return callback(null, true); // Postman / server-to-server
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
-    return callback(new Error(`CORS blocked for origin: ${origin}`));
+
+    const o = normalize(origin);
+
+    if (allowedOrigins.includes(o)) return callback(null, true);
+
+    console.log('CORS blocked origin:', origin);
+    return callback(null, false);
   },
   credentials: true,
 }));
+
 
 app.use(cookieParser());
 app.use(express.json());
