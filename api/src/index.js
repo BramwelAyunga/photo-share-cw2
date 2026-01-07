@@ -52,7 +52,8 @@ app.use(session({
   saveUninitialized: false, // Don't create session until something is stored
   cookie: {
     httpOnly: true, // Prevents client-side JS from reading the cookie
-    secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+    secure: true,
+    sameSite: 'none',  // Use secure cookies in production
     maxAge: 1000 * 60 * 60 * 24 // Expires in 1 day
   }
 }));
